@@ -1,5 +1,8 @@
 const assert = require('assert');
 const testMngr = require('test/testManager');
+const Chance = require('chance');
+
+let chance = new Chance();
 
 describe('Users', function() {
   let client;
@@ -12,6 +15,8 @@ describe('Users', function() {
   });
 
   describe('Admin', () => {
+    let models = testMngr.app.data.sequelize.models;
+    let userModel = models.User;
     before(async () => {
       client = testMngr.client('admin');
       assert(client);
@@ -58,6 +63,27 @@ describe('Users', function() {
       let res = await client.get('v1/users?offset=10&limit=2');
       assert.equal(res.data.length, 2);
     });
+
+    it('should patch a user', async () => {
+      let username = chance.name();
+      let userConfig = {
+        username: username,
+        age: "55",
+        email: username + "@mail.com",
+        authProvider: {
+          name: "facebook",
+          authId: "1234567890"
+        }
+      };
+      let userCreated = await userModel.createUserInGroups(userConfig, ["User"]);
+      assert(userCreated);
+      const ageUpdated = {
+        age: "58"
+      };
+      let updatedUser = await client.patch(`v1/users/${userCreated.id}`, ageUpdated);
+      assert(updatedUser);
+      assert.equal(updatedUser.age, ageUpdated.age);
+      });
 
     it.skip('should not create a new user with missing username', async () => {
       try {

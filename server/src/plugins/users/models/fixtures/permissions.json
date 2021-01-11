@@ -20,6 +20,12 @@
    "PUT":true
  },
  {
+  "name":"/users/:id patch",
+  "resource":"/users/:id",
+  "description":"Can patch a user",
+  "PATCH":true
+  },
+ {
    "name":"/accounts get post",
    "resource":"/accounts",
    "description":"Can list the accounts",

@@ -59,6 +59,23 @@ function UserRouter(app) {
             context.status = 200;
           }
         }
+      },
+      patch: {
+        pathname: "/:id",
+        method: "patch",
+        handler: async context => {
+          const userId = context.params.id;
+          const data = context.request.body;
+          await models.User.update(data, {
+            where: {
+              id: userId
+            }
+          });
+
+          const updatedUser = await models.User.findByUserId(userId);
+          context.body = updatedUser.get();
+          context.status = 200;
+        }
       }
     }
   };

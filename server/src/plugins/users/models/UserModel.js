@@ -32,6 +32,10 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING(64),
         field: "last_name"
       },
+      age: {
+        type: DataTypes.INTEGER,
+        field: "age"
+      },
       picture: {
         type: DataTypes.JSONB
       },
@@ -73,7 +77,7 @@ module.exports = function(sequelize, DataTypes) {
         }
       ],
       where: { [key]: value },
-      attributes: ["id", "email", "username", "picture", "createdAt", "updatedAt"]
+      attributes: ["id", "email", "username", "age", "picture", "createdAt", "updatedAt"]
     });
   };
   User.findByEmail = async function(email) {
