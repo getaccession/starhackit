@@ -10,14 +10,39 @@ export default function(context) {
 
   function Stores() {
     const userStore = observable({
+      language: "US",
+      errors: {},
+      email: "",
+      age: "",
       opGet: asyncOpCreate((id, data) => rest.get(`users/${id}`, data)),
-      get: action(async function(id) {
-        await this.opGet.fetch(id);
+      get: action(async function (id) {
+        const response = await this.opGet.fetch(id);
+        merge(userStore, response);
+      }),
+      opUpdate: asyncOpCreate((id, payload) => rest.patch(`users/${id}`, payload)),
+      update: action(async function (id) {
+        this.errors = {};
+        const payload = {
+          age: this.age || ""
+        };
+        const response = await this.opUpdate.fetch(id);
+        merge(userStore, response);
+        context.alertStack.add(
+          <Alert.Info message={tr.t("User updated")} />
+        );
       })
     });
     return {
       user: userStore
     };
+  }
+
+  function merge(user, response) {
+    user.id = response.id;
+    user.username = response.username;
+    user.age = response.age;
+    user.firstname = response.firstName;
+    user.email = response.email;
   }
 
   function selectOne(userId) {
