@@ -1,3 +1,4 @@
+/* @jsxImportSource @emotion/react */
 import React from "react";
 import panel from "components/panel";
 import restTable from "components/restTable";

@@ -1,3 +1,4 @@
+/* @jsxImportSource @emotion/react */
 import { createElement as h } from "react";
 import { observable, action } from "mobx";
 import AsyncOp from "utils/asyncOp";
@@ -27,9 +28,9 @@ export default function(context) {
         };
         const response = await this.opUpdate.fetch(id);
         merge(userStore, response);
-        context.alertStack.add(
-          <Alert.Info message={tr.t("User updated")} />
-        );
+        // context.alertStack.add(
+        //   <Alert.Info message={tr.t("User updated")} />
+        // );
       })
     });
     return {

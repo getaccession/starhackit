@@ -1,3 +1,4 @@
+/* @jsxImportSource @emotion/react */
 import React, { createElement as h } from "react";
 import { observer } from "mobx-react";
 import page from "components/Page";
