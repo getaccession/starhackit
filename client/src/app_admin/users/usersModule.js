@@ -26,11 +26,11 @@ export default function(context) {
         const payload = {
           age: this.age || ""
         };
-        const response = await this.opUpdate.fetch(id);
+        const response = await this.opUpdate.fetch(id, payload);
         merge(userStore, response);
-        // context.alertStack.add(
-        //   <Alert.Info message={tr.t("User updated")} />
-        // );
+        context.alertStack.add(
+          <Alert.Info message={tr.t("User updated")} />
+        );
       })
     });
     return {
